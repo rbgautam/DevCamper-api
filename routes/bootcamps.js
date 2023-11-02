@@ -8,11 +8,11 @@ createBootcamp,
 updateBootcamp,
 deleteBootcamp} = require('../controllers/bootcamps')
 
-
-router.route('/').get(getBootcamps)
-router.route('/:id').get(getBootcamp);
 router.route('/').get(getBootcamps).post(createBootcamp);
-router.route('/:id').get(getBootcamps).put(updateBootcamp);
-router.route('/:id').get(getBootcamps).delete(deleteBootcamp);
+// router.route('/').get(getBootcamps) = explicitly included with /:id route
+router.route('/:id').get(getBootcamp)
+.put(updateBootcamp)
+.delete(deleteBootcamp);
+
 
 module.exports = router;
