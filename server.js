@@ -33,6 +33,13 @@ jsonData = [
     ];
 
 
-app.listen(PORT,()=>{
+const server = app.listen(PORT,()=>{
     console.log(`Server started in environment = ${process.env.NODE_ENV} on port ${PORT}`);
+});
+
+
+process.on('unhandledRejection',(err,promise)=>{
+    console.log(`Error: ${err.message}`);
+    server.close(()=> process.exit(1));
+
 });
