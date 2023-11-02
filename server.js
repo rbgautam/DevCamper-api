@@ -1,7 +1,8 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const req = require('express/lib/request');
-
+const logger = require('./middleware/logger')
+const morgan = require('morgan');
 //Route files
 const bootcamps = require('./routes/bootcamps');
 
@@ -11,9 +12,13 @@ dotenv.config({path:'./config/config.env'});
 var PORT = process.env.PORT || 5000;
 
 var app = express();
+if(process.env.NODE_ENV === 'developement'){
+    app.use(logger);
+    app.use(morgan('dev'));
+}
+    
 
 //Mount routes
-
 app.use('/api/v1/bootcamps',bootcamps);
 
 jsonData = [
