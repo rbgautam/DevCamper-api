@@ -3,11 +3,16 @@ const dotenv = require('dotenv');
 const req = require('express/lib/request');
 const logger = require('./middleware/logger')
 const morgan = require('morgan');
-//Route files
-const bootcamps = require('./routes/bootcamps');
-
+const dbConn = require('./config/db');
 //env vars
 dotenv.config({path:'./config/config.env'});
+
+//Connect to db
+
+const connect = dbConn();
+
+//Route files
+const bootcamps = require('./routes/bootcamps');
 
 var PORT = process.env.PORT || 5000;
 
