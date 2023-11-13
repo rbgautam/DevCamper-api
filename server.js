@@ -13,6 +13,7 @@ const connect = dbConn();
 
 //Route files
 const bootcamps = require('./routes/bootcamps');
+const recipes = require('./routes/recipes')
 
 var PORT = process.env.PORT || 5000;
 
@@ -27,7 +28,7 @@ if(process.env.NODE_ENV === 'developement'){
 
 //Mount routes
 app.use('/api/v1/bootcamps',bootcamps);
-
+app.use('/api/v1/recipes',recipes);
 //Custom errorhandler
 app.use(errorHandler);
 
