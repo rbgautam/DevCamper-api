@@ -22,6 +22,7 @@ const RecipeSchema = new mongoose.Schema({
   recipe_servings: String,
   recipe_short_description: String,
   recipe_hashtag: String,
+  ingredient_name_string:String,
   ingredients_list: [{type: ingredientSchema}],
   receipe_steps:[{type:recipeStepSchema}],
   author_link: String,
