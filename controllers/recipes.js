@@ -8,8 +8,8 @@ const ErrorResponse =require('../utils/errorResponse')
 //access public
 exports.getRecipes = asyncHandler(async (req, res, next) =>{
 
-        
-        var recipe = await Recipe.find();
+        console.log(req.query)
+        var recipe = await Recipe.find(req.query);
 
         if(!recipe){
              return next(
@@ -56,7 +56,7 @@ exports.getRecipe = asyncHandler(async (req, res, next) =>{
 //route POST /api/v1/recipe/
 //access public
 exports.createRecipe = asyncHandler(async (req, res, next) =>{
-        console.log(req.body)
+        // console.log(req.body)
         var recipe = await Recipe.create(req.body);
     
         res.status(200).json(
