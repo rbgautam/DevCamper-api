@@ -8,8 +8,43 @@ const ErrorResponse =require('../utils/errorResponse')
 //access public
 exports.getRecipes = asyncHandler(async (req, res, next) =>{
 
-        console.log(req.query)
-        var recipe = await Recipe.find(req.query);
+        let query;
+        const reqQuery  = {...req.query};
+
+        const removeFields = ['select','page','sort','limit']
+
+        removeFields.forEach(param => delete reqQuery[param]);
+
+        let querystr = JSON.stringify(reqQuery);
+        //add $ to operators
+        querystr = querystr.replace(/\b(gt|gte|lt|lte|in|search)\b/g,match => `$${match}`);
+        console.log(querystr)
+   
+   
+   
+   
+        query =  Recipe.find(JSON.parse(querystr));
+        //select
+        if(req.query.select){
+            const fields = req.query.select.split(',').join(' ');
+            query =query.select(fields);
+        }
+
+        //sort
+        if(req.query.sort){
+            const sortFields = req.query.sort.split(',').join(' ');
+            query =query.sort(sortFields);
+        }else{ //default sort
+            query = query.sort('-createdAt');
+        }
+
+        
+        //pagination
+        const page = parseInt(req.query.page,10)||1;
+        const limit = parseInt(req.query.limit,10)||50;
+        const skip = (page -1) *limit;
+        query =query.skip(skip).limit(limit);
+        var recipe = await query;
 
         if(!recipe){
              return next(
