@@ -42,8 +42,12 @@ exports.getRecipes = asyncHandler(async (req, res, next) =>{
         //pagination
         const page = parseInt(req.query.page,10)||1;
         const limit = parseInt(req.query.limit,10)||50;
-        const skip = (page -1) *limit;
-        query =query.skip(skip).limit(limit);
+        const startIndex = (page -1) *limit;
+        const endIndex = page * limit;
+        query =query.skip(startIndex).limit(limit);
+        const totalRecipes = await Recipe.countDocuments();
+
+
         var recipe = await query;
 
         if(!recipe){
@@ -55,6 +59,7 @@ exports.getRecipes = asyncHandler(async (req, res, next) =>{
         return res.status(200).json(
             {
                 success : true,
+                total: totalRecipes,
                 count: recipe.length ,
                 data: recipe
             }
