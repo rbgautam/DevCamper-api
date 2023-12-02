@@ -8,8 +8,47 @@ const ErrorResponse =require('../utils/errorResponse')
 //access public
 exports.getRecipes = asyncHandler(async (req, res, next) =>{
 
+        let query;
+        const reqQuery  = {...req.query};
+
+        const removeFields = ['select','page','sort','limit']
+
+        removeFields.forEach(param => delete reqQuery[param]);
+
+        let querystr = JSON.stringify(reqQuery);
+        //add $ to operators
+        querystr = querystr.replace(/\b(gt|gte|lt|lte|in|search)\b/g,match => `$${match}`);
+        console.log(querystr)
+   
+   
+   
+   
+        query =  Recipe.find(JSON.parse(querystr));
+        //select
+        if(req.query.select){
+            const fields = req.query.select.split(',').join(' ');
+            query =query.select(fields);
+        }
+
+        //sort
+        if(req.query.sort){
+            const sortFields = req.query.sort.split(',').join(' ');
+            query =query.sort(sortFields);
+        }else{ //default sort
+            query = query.sort('-createdAt');
+        }
+
         
-        var recipe = await Recipe.find();
+        //pagination
+        const page = parseInt(req.query.page,10)||1;
+        const limit = parseInt(req.query.limit,10)||50;
+        const startIndex = (page -1) *limit;
+        const endIndex = page * limit;
+        query =query.skip(startIndex).limit(limit);
+        const totalRecipes = await Recipe.countDocuments();
+
+
+        var recipe = await query;
 
         if(!recipe){
              return next(
@@ -20,6 +59,7 @@ exports.getRecipes = asyncHandler(async (req, res, next) =>{
         return res.status(200).json(
             {
                 success : true,
+                total: totalRecipes,
                 count: recipe.length ,
                 data: recipe
             }
@@ -56,7 +96,7 @@ exports.getRecipe = asyncHandler(async (req, res, next) =>{
 //route POST /api/v1/recipe/
 //access public
 exports.createRecipe = asyncHandler(async (req, res, next) =>{
-        console.log(req.body)
+        // console.log(req.body)
         var recipe = await Recipe.create(req.body);
     
         res.status(200).json(
