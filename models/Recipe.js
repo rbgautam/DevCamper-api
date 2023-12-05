@@ -1,19 +1,20 @@
-const mongoose = require('mongoose');
-const slugify = require('slugify');
+const mongoose = require("mongoose");
+const slugify = require("slugify");
 const ingredientSchema = new mongoose.Schema({
   quantity: String,
-  name: String  
+  name: String,
 });
 
 const recipeStepSchema = new mongoose.Schema({
   step_text: String,
-  step_pict_list: [{type: String}] 
+  step_pict_list: [{ type: String }],
+  original_step_text: String,
 });
 
 const RecipeSchema = new mongoose.Schema({
   recipe_id: {
     type: String,
-    unique: true
+    unique: true,
   },
   title: String,
   header: String,
@@ -22,9 +23,9 @@ const RecipeSchema = new mongoose.Schema({
   recipe_servings: String,
   recipe_short_description: String,
   recipe_hashtag: String,
-  ingredient_name_string:String,
-  ingredients_list: [{type: ingredientSchema}],
-  receipe_steps:[{type:recipeStepSchema}],
+  ingredient_name_string: String,
+  ingredients_list: [{ type: ingredientSchema }],
+  receipe_steps: [{ type: recipeStepSchema }],
   author_link: String,
   author_avatar: String,
   author_disp_name: String,
@@ -38,5 +39,4 @@ const RecipeSchema = new mongoose.Schema({
   },
 });
 
-
-module.exports = mongoose.model('Recipe', RecipeSchema);
+module.exports = mongoose.model("Recipe", RecipeSchema);
