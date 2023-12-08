@@ -15,6 +15,7 @@ const VideoSchema = new mongoose.Schema({
   uploaded: Boolean,
   author_disp_name: String,
   author_handle: String,
+  video_saved_url: String,
 
   createdAt: {
     type: Date,
