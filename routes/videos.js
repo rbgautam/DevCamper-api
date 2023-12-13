@@ -1,6 +1,7 @@
 const express = require("express");
 const videorouter = express.Router();
 const video = require("../models/Video");
+const { protect } = require("../middleware/auth");
 const advancedFilters = require("../middleware/advancedFilters");
 const {
   getVideos,
@@ -13,8 +14,12 @@ const {
 videorouter
   .route("/")
   .get(advancedFilters(video, "users"), getVideos)
-  .post(createVideo);
+  .post(protect, createVideo);
 // router.route('/').get(getRecipes) = explicitly included with /:id route
-videorouter.route("/:id").get(getVideo).put(updateVideo).delete(deleteVideo);
+videorouter
+  .route("/:id")
+  .get(getVideo)
+  .put(protect, updateVideo)
+  .delete(protect, deleteVideo);
 
 module.exports = videorouter;

@@ -2,6 +2,7 @@ const express = require("express");
 const reciperouter = express.Router();
 const recipe = require("../models/Recipe");
 const advancedFilters = require("../middleware/advancedFilters");
+const { protect } = require("../middleware/auth");
 const {
   getRecipes,
   getRecipe,
@@ -13,12 +14,12 @@ const {
 reciperouter
   .route("/")
   .get(advancedFilters(recipe, "users"), getRecipes)
-  .post(createRecipe);
+  .post(protect, createRecipe);
 // router.route('/').get(getRecipes) = explicitly included with /:id route
 reciperouter
   .route("/:id")
   .get(getRecipe)
-  .put(updateRecipe)
-  .delete(deleteRecipe);
+  .put(protect, updateRecipe)
+  .delete(protect, deleteRecipe);
 
 module.exports = reciperouter;
