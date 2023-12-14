@@ -14,7 +14,7 @@ const {
 reciperouter
   .route("/")
   .get(advancedFilters(recipe, "users"), getRecipes)
-  .post(protect, createRecipe);
+  .post(createRecipe);
 // router.route('/').get(getRecipes) = explicitly included with /:id route
 reciperouter
   .route("/:id")
