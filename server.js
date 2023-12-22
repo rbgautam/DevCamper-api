@@ -17,6 +17,7 @@ const bootcamps = require("./routes/bootcamps");
 const recipes = require("./routes/recipes");
 const videos = require("./routes/videos");
 const auth = require("./routes/auth");
+const recipeurl = require("./routes/recipeurls");
 var PORT = process.env.PORT || 5000;
 
 var app = express();
@@ -33,6 +34,8 @@ app.use("/api/v1/bootcamps", bootcamps);
 app.use("/api/v1/recipes", recipes);
 app.use("/api/v1/videos", videos);
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/recipeurls", recipeurl);
+
 //Custom errorhandler
 app.use(errorHandler);
 
