@@ -21,6 +21,7 @@ const RecipeSchema = new mongoose.Schema({
   main_picture: String,
   recipe_cooking_time: String,
   recipe_servings: String,
+  recipe_favorite_count: String,
   recipe_short_description: String,
   recipe_hashtag: String,
   ingredient_name_string: String,
