@@ -10,8 +10,14 @@ const RecipeURLSchema = new mongoose.Schema({
   original_title: String,
   bookmark_count: Number,
   thumbnail_picture: String,
-  hasVideo: Boolean,
-  uploaded: Boolean,
+  hasVideo: {
+    type: Boolean,
+    default: false,
+  },
+  uploaded: {
+    type: Boolean,
+    default: false,
+  },
 
   createdAt: {
     type: Date,
