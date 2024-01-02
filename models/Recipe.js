@@ -34,6 +34,7 @@ const RecipeSchema = new mongoose.Schema({
   author_handle: String,
   author_location: String,
   author_bio_short: String,
+  source:String,
 
   createdAt: {
     type: Date,
