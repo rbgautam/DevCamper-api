@@ -14,9 +14,7 @@ const connect = dbConn();
 
 //Route files
 
-const videos = require("./routes/videos");
-const products = require("./routes/products");
-const product_detail = require("./routes/product_detail");
+const ideas = require("./routes/ideas");
 const auth = require("./routes/auth");
 var PORT = process.env.PORT || 5000;
 const cors = require('cors');
@@ -38,9 +36,7 @@ if (process.env.NODE_ENV === "developement") {
 
 //Mount routes
 
-app.use("/api/v1/videos", videos);
-app.use("/api/v1/products", products);
-app.use("/api/v1/productdetail", product_detail);
+app.use("/api/v1/ideas", ideas);
 app.use("/api/v1/auth", auth);
 
 

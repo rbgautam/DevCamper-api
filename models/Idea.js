@@ -1,21 +1,20 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
 
-const VideoSchema = new mongoose.Schema({
-  video_id: {
+const IdeaSchema = new mongoose.Schema({
+  idea_id: {
     type: String,
     unique: true,
   },
-  original_title: String,
-  updated_title: String,
-  uploaded_video_url: String,
+  article_title: String,
+  uploaded_article_url: String,
   uploaded_channel_url: String,
   thumbnail_picture: String,
-  video_category: String,
+  idea_category: String,
   uploaded: Boolean,
   author_disp_name: String,
   author_handle: String,
-  video_saved_url: String,
+  idea_saved_url: String,
 
   createdAt: {
     type: Date,
@@ -23,4 +22,4 @@ const VideoSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Video", VideoSchema);
+module.exports = mongoose.model("Idea", IdeaSchema);
