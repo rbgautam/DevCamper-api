@@ -44,7 +44,7 @@ const advancedFilters = (model, popuate) => async (req, res, next) => {
   var results = await query;
 
   if (!results) {
-    return next(new ErrorResponse(`recipes not found`, 404));
+    return next(new ErrorResponse(`products not found`, 404));
   }
 
   res.advancedFilters = {
